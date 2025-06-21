@@ -26,25 +26,11 @@ export default function HakkimdaPage() {
           <div className="space-y-4">
             <h2 className="text-2xl font-semibold text-[#7a5c2e]">Eğitim</h2>
             <ul className="list-disc list-inside space-y-2 text-gray-700">
-              <li>İstanbul Üniversitesi Hukuk Fakültesi</li>
-              <li>Yüksek Lisans - Özel Hukuk</li>
+              <li>Erciyes Üniversitesi Hukuk Fakültesi</li>
+              <li>Lisans - Hukuk</li>
             </ul>
           </div>
-
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold text-[#7a5c2e]">Deneyim</h2>
-            <ul className="list-disc list-inside space-y-2 text-gray-700">
-              <li>10+ yıl avukatlık deneyimi</li>
-              <li>500+ başarılı dava</li>
-              <li>Uzmanlık alanları: Aile Hukuku, Ticaret Hukuku</li>
-            </ul>
-          </div>
-          
-          <div className="pt-6">
-            <button className="px-8 py-3 bg-[#7a5c2e] text-white rounded-md hover:bg-[#a07d4a] transition-colors">
-              CV'mi İndir
-            </button>
-          </div>
+                  
         </div>
       </div>
     </div>
