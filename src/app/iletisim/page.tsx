@@ -9,11 +9,41 @@ export default function IletisimPage() {
     subject: "",
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form gönderme işlemi burada yapılacak
-    console.log(formData);
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: ""
+        });
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -50,7 +80,7 @@ export default function IletisimPage() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
-                E-posta: info@avukatbaharaydin.com
+                E-posta: yunuskaganaydin@gmail.com
               </p>
             </div>
           </div>
@@ -141,11 +171,24 @@ export default function IletisimPage() {
 
             <button
               type="submit"
-              className="w-full px-8 py-3 bg-[#7a5c2e] text-white rounded-md hover:bg-[#a07d4a] transition-colors"
+              disabled={isSubmitting}
+              className="w-full px-8 py-3 bg-[#7a5c2e] text-white rounded-md hover:bg-[#a07d4a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Gönder
+              {isSubmitting ? 'Gönderiliyor...' : 'Gönder'}
             </button>
           </form>
+
+          {submitStatus === "success" && (
+            <div className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-md">
+              Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.
+            </div>
+          )}
+
+          {submitStatus === "error" && (
+            <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
+              Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyiniz.
+            </div>
+          )}
         </div>
       </div>
     </div>
